@@ -19,7 +19,9 @@ import ContextFilter from '../context/ContextFilter'
 const List = () => {
     const [result, setResult] = useState([])
     const [listOfLitters, setListOfLitters] = useState([])
-    const [filteredName, setFilteredName] = useState([])
+    const [filterTitles, setFilterTitles] = useState([])
+    const [filterResult, setFilterResult] = useState([])
+    const {titleFilter} = useContext(ContextFilter)
 
     useEffect(() => {
         axios.get('https://gorest.co.in/public-api/users?_format=json&access-token=watW3SWa15uY_Emzh4nxgrWitAuPKsgravUh')
@@ -29,12 +31,27 @@ const List = () => {
     useEffect( () => {
         const listTitle = []
         const listLitter = []
-        result.map(res => listTitle.push(res.first_name))
+        titleFilter.length >  2
+        ? filterTitles.map(res => listTitle.push(res.first_name))
+        : result.map(res => listTitle.push(res.first_name))
         listTitle.map(title => listLitter.push(title[0]))
         const uniqueLitter = new Set(listLitter)
         const uniqueArrayOfLitter = [...uniqueLitter]
         setListOfLitters(uniqueArrayOfLitter.sort())
-    }, [filteredName])
+    }, [result, titleFilter])
+
+    useEffect(() => {
+      setFilterResult([...result])
+      setFilterTitles(
+        filterResult.filter( filterRes => {
+          return filterRes.first_name.toLowerCase().includes(titleFilter.toLowerCase())
+        })
+      )
+    }, [titleFilter])
+
+    console.log('titleFilter', titleFilter.length)
+    console.log('filterTitles', filterTitles.length)
+    console.log('result', result.length)
 
     return(
         <SafeAreaView>
@@ -47,9 +64,14 @@ const List = () => {
                   {listOfLitters && listOfLitters.map((lit) => (
                       <View>
                           <Text style={styles.litter}>{`<${lit}>`}</Text>
-                          {result.map( res => (
-                              lit === res.first_name[0] && <Text style={res.status === 'active' ? styles.infoActive : styles.infoInactive} key={res.id}>{`#${res.id} - ${res.first_name} ${res.last_name} ${res.last_name} - ${new Date().getFullYear() - res.dob.substr(0, 4)} year old - ${res.gender}`}</Text>
-                          ))}
+                          {titleFilter.length >  2
+                              ? filterTitles.map( (res, key) => (
+                                lit === res.first_name[0] && <Text key={res.id} style={res.status === 'active' ? styles.infoActive : styles.infoInactive} key={res.id}>{`#${res.id} - ${res.first_name} ${res.last_name} ${res.last_name} - ${new Date().getFullYear() - res.dob.substr(0, 4)} year old - ${res.gender}`}</Text>
+                              ))
+                              : result.map( (res, key) => (
+                                lit === res.first_name[0] && <Text key={res.id} style={res.status === 'active' ? styles.infoActive : styles.infoInactive} key={res.id}>{`#${res.id} - ${res.first_name} ${res.last_name} ${res.last_name} - ${new Date().getFullYear() - res.dob.substr(0, 4)} year old - ${res.gender}`}</Text>
+                              ))
+                           }
                       </View>
                       )
                   )}
