@@ -3,8 +3,8 @@ import ContextFilter from './ContextFilter'
 
 const ContextFilterState = ({children}) => {
     const [titleFilter, setTitleFilter] = useState('')
-    const [fromAge, setFromAge] = useState('')
-    const [toAge, setToAge] = useState('')
+    const [fromAge, setFromAge] = useState(0)
+    const [toAge, setToAge] = useState(200)
     const [gender, setGender] = useState('')
 
     const handleSubmit = () => {

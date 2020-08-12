@@ -18,14 +18,12 @@ const Filter = () => {
             <TextInput
                 style={styles.textInput}
                 placeholder="fromAge"
-                keyboardType='numeric'
                 onChangeText={value => setFromAge(value)}
                 value={fromAge}
             />
             <TextInput
                 style={styles.textInput}
                 placeholder="toAge"
-                keyboardType='numeric'
                 onChangeText={value => setToAge(value)}
                 value={toAge}
             />
@@ -63,3 +61,6 @@ const styles = StyleSheet.create({
 })
 
 export default Filter
+
+
+
