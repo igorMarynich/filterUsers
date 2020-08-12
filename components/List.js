@@ -75,10 +75,14 @@ const List = () => {
             style={styles.scrollView}>
               <Filter />
               <View style={styles.body}>
-                {
-                  filteredResult.map(res => {
-                    return <Text key={res.id} style={res.status === 'active' ? styles.infoActive : styles.infoInactive} key={res.id}>{`#${res.id} - ${res.first_name} ${res.last_name} ${res.last_name} - ${new Date().getFullYear() - res.dob.substr(0, 4)} year old - ${res.gender}`}</Text>
-                  })
+                { filteredResult && filteredResult.sort().map( lit => (
+                    <View>
+                      <Text style={styles.litter}>{`<${lit.first_name[0].toUpperCase()}>`}</Text>
+                      {filteredResult.map( res => {
+                          return lit.first_name[0].toUpperCase() === res.first_name[0].toUpperCase() && <Text style={res.status === 'active' ? styles.infoActive : styles.infoInactive} key={res.id}>{`#${res.id} - ${res.first_name} ${res.last_name} ${res.last_name} - ${new Date().getFullYear() - res.dob.substr(0, 4)} year old - ${res.gender}`}</Text>
+                        })}
+                    </View>
+                  ))
                 }
               </View>
             </ScrollView>
