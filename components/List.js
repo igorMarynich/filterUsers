@@ -46,18 +46,22 @@ const List = () => {
     // }, [result, titleFilter])
 
     useEffect( () => {
-      setFilteredResult(
-        result.filter( filterRes => {
-          console.log('filterRes', filterRes)
-          filterRes.allGender = 'both'
-          const age = new Date().getFullYear() - filterRes.dob.substr(0, 4)
-          return ((filterRes.first_name.toLowerCase().includes(titleFilter.toLowerCase()))
-            && (age > fromAge && age < toAge)
-            && (filterRes.gender.toLowerCase() === selectedValue
-              ? filterRes.gender.toLowerCase() === selectedValue
-              : filterRes.allGender.toLowerCase() === selectedValue))
-        })
-      )
+      const timer = setTimeout(() => {
+        setFilteredResult(
+          result.filter( filterRes => {
+            filterRes.allGender = 'both'
+            const age = new Date().getFullYear() - filterRes.dob.substr(0, 4)
+            return (( titleFilter.length > 2
+                  ? filterRes.first_name.toLowerCase().includes(titleFilter.toLowerCase())
+                  : filterRes.first_name.toLowerCase())
+              && (age > fromAge && age < toAge)
+              && (filterRes.gender.toLowerCase() === selectedValue
+                ? filterRes.gender.toLowerCase() === selectedValue
+                : filterRes.allGender.toLowerCase() === selectedValue))
+          })
+        )
+      }, 400);
+      return () => clearTimeout(timer);
     }, [titleFilter, fromAge, toAge, selectedValue, result])
 
     console.log('filteredResult', filteredResult.length)
