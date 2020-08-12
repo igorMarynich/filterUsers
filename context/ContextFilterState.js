@@ -5,13 +5,13 @@ const ContextFilterState = ({children}) => {
     const [titleFilter, setTitleFilter] = useState('')
     const [fromAge, setFromAge] = useState(0)
     const [toAge, setToAge] = useState(200)
-    const [gender, setGender] = useState('')
+    const [selectedValue, setSelectedValue] = useState('both');
 
     const handleSubmit = () => {
         setTitleFilter('')
-        setFromAge('')
-        setToAge('')
-        setGender('')
+        setFromAge(0)
+        setToAge(200)
+        setSelectedValue('both')
     }
 
     return (
@@ -19,7 +19,7 @@ const ContextFilterState = ({children}) => {
             titleFilter, setTitleFilter,
             fromAge, setFromAge,
             toAge, setToAge,
-            gender, setGender,
+            selectedValue, setSelectedValue,
             handleSubmit
         }}>
             {children}
