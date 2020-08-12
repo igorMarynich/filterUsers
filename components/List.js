@@ -49,10 +49,13 @@ const List = () => {
       setFilteredResult(
         result.filter( filterRes => {
           console.log('filterRes', filterRes)
+          filterRes.allGender = 'both'
           const age = new Date().getFullYear() - filterRes.dob.substr(0, 4)
           return ((filterRes.first_name.toLowerCase().includes(titleFilter.toLowerCase()))
             && (age > fromAge && age < toAge)
-            && (filterRes.gender.toLowerCase() === selectedValue))
+            && (filterRes.gender.toLowerCase() === selectedValue
+              ? filterRes.gender.toLowerCase() === selectedValue
+              : filterRes.allGender.toLowerCase() === selectedValue))
         })
       )
     }, [titleFilter, fromAge, toAge, selectedValue, result])
