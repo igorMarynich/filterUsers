@@ -52,7 +52,7 @@ const List = () => {
             filterRes.allGender = 'both'
             const age = new Date().getFullYear() - filterRes.dob.substr(0, 4)
             return (( titleFilter.length > 2
-                  ? filterRes.first_name.toLowerCase().includes(titleFilter.toLowerCase())
+                  ? (filterRes.first_name.toLowerCase().includes(titleFilter.toLowerCase()) || filterRes.last_name.toLowerCase().includes(titleFilter.toLowerCase()))
                   : filterRes.first_name.toLowerCase())
               && (age > fromAge && age < toAge)
               && (filterRes.gender.toLowerCase() === selectedValue
@@ -79,7 +79,7 @@ const List = () => {
                     <View>
                       <Text style={styles.litter}>{`<${lit.first_name[0].toUpperCase()}>`}</Text>
                       {filteredResult.map( res => {
-                          return lit.first_name[0].toUpperCase() === res.first_name[0].toUpperCase() && <Text style={res.status === 'active' ? styles.infoActive : styles.infoInactive} key={res.id}>{`#${res.id} - ${res.first_name} ${res.last_name} ${res.last_name} - ${new Date().getFullYear() - res.dob.substr(0, 4)} year old - ${res.gender}`}</Text>
+                          return lit.first_name[0].toUpperCase() === res.first_name[0].toUpperCase() && <Text style={res.status === 'active' ? styles.infoActive : styles.infoInactive} key={res.id}>{`#${res.id} - ${res.first_name} ${res.last_name} - ${new Date().getFullYear() - res.dob.substr(0, 4)} year old - ${res.gender}`}</Text>
                         })}
                     </View>
                   ))
