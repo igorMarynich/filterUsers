@@ -14,7 +14,7 @@ const Filter = () => {
                 type='name'
                 placeholder="name"
                 onChangeText={value => setTitleFilter(value)}
-                value={titleFilter}
+                value={String(titleFilter)}
             />
             <TextInput
                 style={styles.textInput}
@@ -22,7 +22,7 @@ const Filter = () => {
                 keyboardType = 'number-pad'
                 placeholder="fromAge"
                 onChangeText={value => setFromAge(value)}
-                value={fromAge}
+                value={String(fromAge)}
             />
             <TextInput
                 style={styles.textInput}
@@ -30,7 +30,7 @@ const Filter = () => {
                 keyboardType = 'number-pad'
                 placeholder="toAge"
                 onChangeText={value => setToAge(value)}
-                value={toAge}
+                value={String(toAge)}
             />
             <View>
                 <Picker
