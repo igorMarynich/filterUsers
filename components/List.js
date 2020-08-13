@@ -13,13 +13,15 @@ import axios from 'axios'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import Filter from './Filter'
+import ModalExample from './ModalExample'
+import ModalFinish from './ModalFinish'
 import ContextFilter from '../context/ContextFilter'
 
 
 const List = () => {
     const [result, setResult] = useState([])
     const [filteredResult, setFilteredResult] = useState([])
-    const {titleFilter, fromAge, toAge, selectedValue} = useContext(ContextFilter)
+    const {titleFilter, fromAge, toAge, selectedValue, modalVisible, setModalVisible, setIdRes} = useContext(ContextFilter)
     let arrayOfLitters = []
     let sortByAlfOfLitters = []
 
@@ -47,6 +49,10 @@ const List = () => {
       return () => clearTimeout(timer);
     }, [titleFilter, fromAge, toAge, selectedValue, result])
 
+    const deleteUser = (id) => {
+      setFilteredResult(filteredResult.filter( filterRes => filterRes.id !== id))
+    }
+
 
     return(
         <SafeAreaView>
@@ -54,6 +60,8 @@ const List = () => {
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}>
               <Filter />
+              <ModalExample deleteUser={deleteUser}/>
+              <ModalFinish />
               <View style={styles.body}>
                 {filteredResult.map( lit => {
                     arrayOfLitters.push(lit.first_name[0].toUpperCase())
@@ -65,7 +73,14 @@ const List = () => {
                     <View>
                        <Text style={styles.litter}>{`<${lit}>`}</Text>
                        {filteredResult.sort((a, b) => (a.first_name > b.first_name) ? 1 : -1).map(res=> {
-                          return lit === res.first_name[0].toUpperCase() && <Text style={res.status === 'active' ? styles.infoActive : styles.infoInactive} key={res.id}>{`#${res.id} - ${res.first_name} ${res.last_name} - ${new Date().getFullYear() - res.dob.substr(0, 4)} year old - ${res.gender}`}</Text>
+                          return lit === res.first_name[0].toUpperCase() &&
+                            <Text
+                              style={res.status === 'active' ? styles.infoActive : styles.infoInactive} key={res.id}
+                              onPress={() => {
+                                setModalVisible(!modalVisible);
+                                setIdRes(res.id)
+                              }}>
+                                {`#${res.id} - ${res.first_name} ${res.last_name} - ${new Date().getFullYear() - res.dob.substr(0, 4)} year old - ${res.gender}`}</Text>
                         })}
                     </View>
                   )

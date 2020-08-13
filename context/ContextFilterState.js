@@ -6,6 +6,9 @@ const ContextFilterState = ({children}) => {
     const [fromAge, setFromAge] = useState(0)
     const [toAge, setToAge] = useState(200)
     const [selectedValue, setSelectedValue] = useState('both');
+    const [modalVisible, setModalVisible] = useState(false);
+    const [idRes, setIdRes] = useState(0)
+    const [modalVisibleFinish, setModalVisibleFinish] = useState(false)
 
     const handleSubmit = () => {
         setTitleFilter('')
@@ -20,7 +23,10 @@ const ContextFilterState = ({children}) => {
             fromAge, setFromAge,
             toAge, setToAge,
             selectedValue, setSelectedValue,
-            handleSubmit
+            handleSubmit,
+            modalVisible, setModalVisible,
+            idRes, setIdRes,
+            modalVisibleFinish, setModalVisibleFinish
         }}>
             {children}
         </ContextFilter.Provider>
