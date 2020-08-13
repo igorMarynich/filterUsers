@@ -55,11 +55,10 @@ const List = () => {
             style={styles.scrollView}>
               <Filter />
               <View style={styles.body}>
-                {result.map( lit => {
+                {filteredResult.map( lit => {
                     arrayOfLitters.push(lit.first_name[0].toUpperCase())
                     arrayOfLitters.sort()
                     sortByAlfOfLitters = [...new Set(arrayOfLitters)]
-                    console.log('sortByAlfOfLitters', sortByAlfOfLitters)
                   })}
                 {sortByAlfOfLitters.map( lit => {
                   return(
