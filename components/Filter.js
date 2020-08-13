@@ -11,12 +11,14 @@ const Filter = () => {
             <Text style={styles.titleFilter}>Filter</Text>
             <TextInput
                 style={styles.textInput}
+                type='name'
                 placeholder="name"
                 onChangeText={value => setTitleFilter(value)}
                 value={titleFilter}
             />
             <TextInput
                 style={styles.textInput}
+                type='cc-number'
                 keyboardType = 'number-pad'
                 placeholder="fromAge"
                 onChangeText={value => setFromAge(value)}
@@ -24,6 +26,7 @@ const Filter = () => {
             />
             <TextInput
                 style={styles.textInput}
+                type='cc-number'
                 keyboardType = 'number-pad'
                 placeholder="toAge"
                 onChangeText={value => setToAge(value)}
